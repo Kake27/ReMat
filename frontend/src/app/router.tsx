@@ -16,6 +16,7 @@ import ViewBins from "../pages/admin/bins/ViewBins";
 
 import Unauthorized from "../pages/Unauthorized";
 import RoleRedirect from "./RoleRedirect";
+import BinDetails from "../pages/admin/bins/BinDetails";
 
 
 export const router = createBrowserRouter([
@@ -83,6 +84,7 @@ export const router = createBrowserRouter([
             {path: "dashboard", element: <AdminDashboard />},
             {path: "bins/add", element: <AddBin />},
             {path: "bins", element: <ViewBins />},
+            {path: "bins/:binId", element: <BinDetails />},
             { index: true, element: <Navigate to="dashboard" replace /> },
         ]
     }
