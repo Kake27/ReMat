@@ -14,7 +14,6 @@ interface MapClickHandlerProps {
 }
 
 
-
 const getMarkerIcon = (status?: string, fillLevel?: number) => {
   let color = "green";
 
@@ -50,7 +49,6 @@ const MapClickHandler = ({ onMapClick }: MapClickHandlerProps) => {
 };
 
 
-
 interface MapViewProps {
   bins?: Bin[]; 
   center?: [number, number];
@@ -61,15 +59,7 @@ interface MapViewProps {
   showPopup?: boolean;
 }
 
-export default function MapView({
-  bins = [],
-  center = [25.26, 82.98],
-  zoom = 13,
-  height = "400px",
-  onMarkerClick,
-  onMapClick,
-  showPopup = true,
-}: MapViewProps) {
+export default function MapView({ bins = [], center = [25.26, 82.98], zoom = 13, height = "400px", onMarkerClick, onMapClick, showPopup = true}: MapViewProps) {
   return (
     <MapContainer
       center={center}
@@ -86,7 +76,7 @@ export default function MapView({
       {bins.map((bin) => (
         <Marker
           key={bin.id}
-          position={[bin.location.lat, bin.location.lng]}
+          position={[bin.lat, bin.lng]}
           icon={getMarkerIcon(bin.status, bin.fill_level)}
           eventHandlers={{
             click: () => {

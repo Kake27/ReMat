@@ -14,7 +14,7 @@ const AdminDashboard = () => {
 
   // Fetch bins
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/bins")
+    fetch("http://127.0.0.1:8000/api/bins/")
       .then(res => res.json())
       .then(data => {
 
@@ -50,7 +50,7 @@ const AdminDashboard = () => {
     <div style={{ padding: "1.5rem" }}>
       {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h1>Hello Admin {profile.name} 👋</h1>
+        <h1>Hello Admin 👋</h1>
         <button 
           onClick={handleLogout}
           style={{ padding: "8px 16px", cursor: "pointer" }}

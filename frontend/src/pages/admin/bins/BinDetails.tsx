@@ -53,6 +53,14 @@ export default function BinDetails() {
         }
       />
 
+      <input
+        type="number"
+        value={bin.capacity}
+        onChange={e =>
+          setBin({ ...bin, capacity: Number(e.target.value) })
+        }
+      />
+
       <select
         value={bin.status}
         onChange={e => setBin({ ...bin, status: e.target.value })}
