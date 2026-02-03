@@ -11,6 +11,8 @@ import Signup from "../pages/auth/Signup";
 
 import UserDashboard from "../pages/user/UserDashboard";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import AddBin from "../pages/admin/bins/AddBin";
+
 import Unauthorized from "../pages/Unauthorized";
 import RoleRedirect from "./RoleRedirect";
 
@@ -78,6 +80,7 @@ export const router = createBrowserRouter([
         ),
         children: [
             {path: "dashboard", element: <AdminDashboard />},
+            {path: "bins/add", element: <AddBin />},
             { index: true, element: <Navigate to="dashboard" replace /> },
         ]
     }

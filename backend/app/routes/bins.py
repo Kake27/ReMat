@@ -3,6 +3,15 @@ from sqlalchemy.orm import Session
 from app.database import SessionLocal
 from sqlalchemy.sql import text
 
+from pydantic import BaseModel
+
+class CreateBinPayload(BaseModel):
+    name: str
+    lat: float
+    lng: float
+    capacity: int = 100
+    status: str = "active"
+
 router = APIRouter(prefix="/api/bins", tags=["Bins"])
 
 def get_db():
@@ -60,6 +69,45 @@ def get_bin_by_id(bin_id: str, db: Session = Depends(get_db)):
         )
 
     return result
+
+
+@router.post("/")
+def create_bin(
+    payload: CreateBinPayload,
+    db: Session = Depends(get_db)
+):
+    query = text("""
+        INSERT INTO bins (
+            name,
+            location,
+            capacity,
+            fill_level,
+            status
+        )
+        VALUES (
+            :name,
+            ST_SetSRID(ST_MakePoint(:lng, :lat), 4326),
+            :capacity,
+            0,
+            :status
+        )
+        RETURNING id
+    """)
+
+    result = db.execute(query, {
+        "name": payload.name,
+        "lat": payload.lat,
+        "lng": payload.lng,
+        "capacity": payload.capacity,
+        "status": payload.status
+    }).fetchone()
+
+    db.commit()
+
+    return {
+        "message": "Bin created successfully",
+        "bin_id": result[0]
+    }
 
 
 @router.put("/{bin_id}")
