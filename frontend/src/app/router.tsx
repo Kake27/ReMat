@@ -5,6 +5,7 @@ import Login from "../pages/auth/Login";
 import Signup from "../pages/auth/Signup";
 import UserDashboard from "../pages/user/UserDashboard";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import Unauthorized from "../pages/Unauthorized";
 
 export const router = createBrowserRouter([
     {
@@ -34,6 +35,11 @@ export const router = createBrowserRouter([
                 <AdminDashboard />
             </ProtectedRoute>
         )
+    },
+    {
+        path: "/unauthorized",
+        element: <Unauthorized />
+
     }
     // {
     //     path: "/user",

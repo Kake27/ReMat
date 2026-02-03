@@ -13,13 +13,13 @@ const ProtectedRoute = ({ children, role }: ProtectedRouteProps) => {
   if (loading) return <div>Loading...</div>;
 
   if(!user) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/auth/login" replace />
   }
 
   if (role && !profile) return <div>Loading...</div>;
   
   if (role && profile?.role !== role) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/unauthorized" replace />;
   }
 
   return children;

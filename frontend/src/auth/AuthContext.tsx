@@ -10,6 +10,7 @@ export interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string, password: string) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
+  signupWithGoogle: () => Promise<void>
   logout: () => Promise<void>;
 }
 
