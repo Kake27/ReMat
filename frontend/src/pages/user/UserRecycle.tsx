@@ -1,13 +1,8 @@
 import CameraCapture from "../components/CameraCapture"
 import { useState } from "react"
 import MapView from "../components/MapView"
-import type { Bin } from "../../types"
+import type { Bin, DetectionResult } from "../../types"
 
-interface DetectionResult {
-  waste_type: string
-  confidence: number
-  estimated_value: number
-}
 
 const UserRecycle = () => {
   const [display, setDisplay] = useState<boolean>(false)
