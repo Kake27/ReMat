@@ -76,12 +76,12 @@ const BinScreen = () => {
 
         <section className="bin-qr">
           <QRCode
-            value={`http://localhost:5173/user/recycle/${bin.id}`}
+            value={`${bin.id}`}
             size={160}
             bgColor="#020617"
             fgColor="#ffffff"
           />
-          <p>Scan to Donate</p>
+          <p>Scan to Recycle</p>
         </section>
 
         <footer className="bin-footer">
