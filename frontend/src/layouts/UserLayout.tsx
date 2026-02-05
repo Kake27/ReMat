@@ -3,6 +3,8 @@ import { Outlet } from "react-router-dom";
 import PillNav from "../pages/components/PillNav";
 import Grainient from "../pages/components/Granient";
 import logo from "../../public/tab-logo.png"
+import Footer from "../pages/components/Footer";
+
 
 const UserLayout = () => {
     const items = [
@@ -64,7 +66,9 @@ const UserLayout = () => {
             {/* Content */}
             <div className="relative mx-4 pt-24">
                 <Outlet />
+                <Footer />
             </div>
+            
         </div>
     )
 }

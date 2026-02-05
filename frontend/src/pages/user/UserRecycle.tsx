@@ -7,7 +7,6 @@ import QRScanner from "../components/QRScanner";
 import { useAuth } from "../../auth/useAuth";
 import { extractBinIdFromQR } from "../utils/getBinfromQR";
 import SpotlightCard from "../components/SpotlightCard";
-import Footer from "../components/Footer";
 
 // Manual override points from your config
 const MANUAL_OVERRIDE_POINTS: Record<string, number> = {
@@ -48,6 +47,32 @@ const UserRecycle = () => {
       );
     }
   }, []);
+
+  useEffect(() => {
+    const fetchBins = async () => {
+      try {
+        const binsResp = await fetch(`${API_BASE}/api/bins/`);
+        if (binsResp.ok) {
+          const binsData = await binsResp.json();
+          const remoteBins: Bin[] = (binsData.bins ?? []).map((b: any) => ({
+            id: b.id,
+            name: b.name,
+            lat: Number(b.lat),
+            lng: Number(b.lng),
+            status: b.status,
+            fill_level: b.fill_level,
+            capacity: b.capacity,
+          }));
+          setBins(remoteBins);
+          if (remoteBins.length > 0) setMapCenter([remoteBins[0].lat, remoteBins[0].lng]);
+        }
+      } catch (error) {
+        console.error("Error fetching bins:", error);
+      }
+    };
+  
+    fetchBins();
+  }, [API_BASE]);
 
   const handleCapture = async (imageData: string | Blob) => {
     setLoading(true);
@@ -477,7 +502,6 @@ const UserRecycle = () => {
           </SpotlightCard>
         )}
       </div>
-      <Footer />
     </div>
   );
 };

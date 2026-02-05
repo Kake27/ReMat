@@ -4,7 +4,6 @@ import { useAuth } from "../../auth/useAuth";
 import MapView from "../components/MapView";
 import type { Bin } from "../../types";
 import SpotlightCard from "../components/SpotlightCard";
-import Footer from "../components/Footer";
 
 const API_BASE =
   (import.meta.env.VITE_API_BASE_URL as string) || "http://127.0.0.1:8000";
@@ -257,8 +256,7 @@ const UserDashboard = () => {
         </div>
       </div>
 
-   <Footer />
-    </div>
+      </div>
   );
 };
 
