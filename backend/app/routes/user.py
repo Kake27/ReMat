@@ -88,3 +88,8 @@ def leaderboard(db: Session = Depends(get_db)):
         }
         for user in results
     ]
+    
+
+@router.put("/recycle/{binid}")
+def perform_transaction():
+    pass
