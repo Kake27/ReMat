@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SpotlightCard from "../../components/SpotlightCard";
-import { useAuth } from "../../../auth/useAuth";
+// import { useAuth } from "../../../auth/useAuth";
+import toast, { Toaster } from "react-hot-toast";
 
 const API_BASE =
   (import.meta.env.VITE_API_BASE_URL as string) || "http://127.0.0.1:8000";
@@ -37,7 +38,6 @@ type User = {
 type TimeFilter = "day" | "week" | "month" | "year" | "all";
 
 const Analytics = () => {
-  const { profile } = useAuth();
   const [loading, setLoading] = useState(true);
   const [timeFilter, setTimeFilter] = useState<TimeFilter>("week");
   const [allTransactions, setAllTransactions] = useState<Transaction[]>([]);
@@ -81,6 +81,7 @@ const Analytics = () => {
         setAllTransactions(allTxns);
       } catch (err) {
         console.error("Error fetching analytics data:", err);
+        toast.error("Error fetching analytics data.")
         setAllTransactions([]);
         setUsers([]);
       } finally {
@@ -196,6 +197,7 @@ const Analytics = () => {
 
   return (
     <div className="min-h-screen pb-8">
+      <Toaster />
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
         {/* Header */}
         <div className="mb-8">

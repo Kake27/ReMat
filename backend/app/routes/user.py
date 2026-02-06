@@ -17,12 +17,12 @@ router = APIRouter(prefix="/user", tags=["User"])
 
 class RecyclePayload(BaseModel):
     waste_type: str
-    base_points: int | None = None  # base points for the waste type (from detection)
-    estimated_value: int | None = None  # deprecated, use base_points
+    base_points: int | None = None  
+    estimated_value: int | None = None  
     confidence: float | None = None
-    user_override: bool = False  # True if user manually selected type
+    user_override: bool = False  
 
-# Upload path relative to backend root (works regardless of cwd)
+
 _BACKEND_ROOT = Path(__file__).resolve().parent.parent.parent
 UPLOAD_FOLDER = str(_BACKEND_ROOT / "uploads" / "waste_images")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
