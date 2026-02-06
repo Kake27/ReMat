@@ -8,6 +8,16 @@ import { useAuth } from "../../auth/useAuth";
 import { extractBinIdFromQR } from "../utils/getBinfromQR";
 import SpotlightCard from "../components/SpotlightCard";
 
+interface BinResponse {
+  id: string | number;
+  name: string;
+  lat: string | number;
+  lng: string | number;
+  status: string;
+  fill_level: number;
+  capacity: number;
+}
+
 // Manual override points from your config
 const MANUAL_OVERRIDE_POINTS: Record<string, number> = {
   "PCB": 90,
@@ -54,15 +64,15 @@ const UserRecycle = () => {
         const binsResp = await fetch(`${API_BASE}/api/bins/`);
         if (binsResp.ok) {
           const binsData = await binsResp.json();
-          const remoteBins: Bin[] = (binsData.bins ?? []).map((b: any) => ({
-            id: b.id,
-            name: b.name,
-            lat: Number(b.lat),
-            lng: Number(b.lng),
-            status: b.status,
-            fill_level: b.fill_level,
-            capacity: b.capacity,
-          }));
+            const remoteBins: Bin[] = (binsData.bins ?? []).map((b: BinResponse) => ({
+              id: b.id,
+              name: b.name,
+              lat: Number(b.lat),
+              lng: Number(b.lng),
+              status: b.status,
+              fill_level: b.fill_level,
+              capacity: b.capacity,
+            }));
           setBins(remoteBins);
           if (remoteBins.length > 0) setMapCenter([remoteBins[0].lat, remoteBins[0].lng]);
         }
@@ -105,7 +115,7 @@ const UserRecycle = () => {
       const binsResp = await fetch(`${API_BASE}/api/bins/`);
       if (binsResp.ok) {
         const binsData = await binsResp.json();
-        const remoteBins: Bin[] = (binsData.bins ?? []).map((b: any) => ({
+        const remoteBins: Bin[] = (binsData.bins ?? []).map((b: BinResponse) => ({
           id: b.id,
           name: b.name,
           lat: Number(b.lat),
@@ -135,7 +145,7 @@ const UserRecycle = () => {
     fetch(`${API_BASE}/api/bins/`)
       .then(res => res.json())
       .then(binsData => {
-        const remoteBins: Bin[] = (binsData.bins ?? []).map((b: any) => ({
+        const remoteBins: Bin[] = (binsData.bins ?? []).map((b: BinResponse) => ({
           id: b.id,
           name: b.name,
           lat: Number(b.lat),
@@ -222,7 +232,7 @@ const UserRecycle = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+      <div className="max-w-350 mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2 flex items-center gap-3">
@@ -235,7 +245,7 @@ const UserRecycle = () => {
         {/* Action Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {/* Camera Scan Card */}
-          <SpotlightCard className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 backdrop-blur-xl border border-blue-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 h-full">
+          <SpotlightCard className="bg-linear-to-br from-blue-500/10 to-blue-600/5 backdrop-blur-xl border border-blue-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 h-full">
             <div className="flex flex-col items-center justify-center text-center h-full">
               <div className="p-4 bg-blue-500/20 rounded-xl mb-4">
                 <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -255,7 +265,7 @@ const UserRecycle = () => {
           </SpotlightCard>
 
           {/* Upload Photo Card */}
-            <SpotlightCard className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 backdrop-blur-xl border border-purple-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 h-full">
+            <SpotlightCard className="bg-linear-to-br from-purple-500/10 to-purple-600/5 backdrop-blur-xl border border-purple-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 h-full">
               <div className="flex flex-col items-center justify-center text-center h-full">
               <div className="p-4 bg-purple-500/20 rounded-xl mb-4">
                 <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -283,7 +293,7 @@ const UserRecycle = () => {
           </SpotlightCard>
 
           {/* Manual Selection Card */}
-            <SpotlightCard className="bg-gradient-to-br from-green-500/10 to-green-600/5 backdrop-blur-xl border border-green-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-green-500/10 transition-all duration-300 h-full">
+            <SpotlightCard className="bg-linear-to-br from-green-500/10 to-green-600/5 backdrop-blur-xl border border-green-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-green-500/10 transition-all duration-300 h-full">
               <div className="flex flex-col items-center justify-center text-center h-full">
               <div className="p-4 bg-green-500/20 rounded-xl mb-4">
                 <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -415,7 +425,7 @@ const UserRecycle = () => {
               {result.confidence < 0.40 && (
                 <div className="p-5 bg-yellow-500/10 border border-yellow-500/30 rounded-xl mb-6">
                   <div className="flex gap-4">
-                    <svg className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-yellow-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
                     <div className="flex-1">
@@ -459,7 +469,7 @@ const UserRecycle = () => {
 
             {/* Confirmation */}
             {scannedBinId && (
-              <SpotlightCard className="bg-gradient-to-br from-green-500/10 to-green-600/5 backdrop-blur-xl border border-green-500/20 rounded-xl p-8">
+              <SpotlightCard className="bg-linear-to-br from-green-500/10 to-green-600/5 backdrop-blur-xl border border-green-500/20 rounded-xl p-8">
                 <Confirmation
                   result={result}
                   binId={scannedBinId}

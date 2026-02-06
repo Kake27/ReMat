@@ -1,17 +1,17 @@
 const Footer = () => {
   return (
     <footer className="w-screen relative left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] mt-16 bg-black/20 backdrop-blur-xl border-t border-white/10">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-350` mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
 
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-linear-to--br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
                 <span className="text-white text-xl font-bold">♻️</span>
               </div>
               <h3 className="text-xl font-bold text-white">
-                Smart E-Waste Bin
+                ReMat: An E-Waste Recyling Platform
               </h3>
             </div>
 
@@ -118,7 +118,7 @@ const Footer = () => {
         <div className="pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white/40 text-sm">
-              © 2024 Smart E-Waste Bin System · Built for Haxplore
+              © 2026 Smart E-Waste Bin System · Built for Haxplore
             </p>
 
             <div className="flex items-center gap-6">
