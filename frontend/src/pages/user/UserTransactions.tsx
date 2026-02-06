@@ -14,6 +14,7 @@ type Transaction = {
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [allTransactions, setAllTransactions] = useState<Transaction[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
@@ -21,6 +22,31 @@ const Transactions = () => {
 
   const userId = profile?.uid;
 
+  // Fetch all transactions for stats calculation
+  useEffect(() => {
+    const fetchAllTransactions = async () => {
+      try {
+        const API_BASE = (import.meta.env.VITE_API_BASE_URL as string) || "http://127.0.0.1:8000";
+        const res = await fetch(
+          `${API_BASE}/user/transactions/${userId}?page=1&limit=10000`
+        );
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch all transactions");
+        }
+
+        const data = await res.json();
+        setAllTransactions(data);
+      } catch (err) {
+        console.error(err);
+        setAllTransactions([]);
+      }
+    };
+
+    if (userId) fetchAllTransactions();
+  }, [userId]);
+
+  // Fetch paginated transactions
   useEffect(() => {
     const fetchTransactions = async () => {
       setLoading(true);
@@ -47,8 +73,23 @@ const Transactions = () => {
     if (userId) fetchTransactions();
   }, [userId, page]);
 
-  // Calculate total points from transactions
-  const totalPoints = transactions.reduce((sum, txn) => sum + txn.points_awarded, 0);
+  // Calculate points for different time periods
+  const now = new Date();
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(now.getDate() - now.getDay()); // Sunday
+  startOfWeek.setHours(0, 0, 0, 0);
+
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  const pointsThisWeek = allTransactions
+    .filter(txn => new Date(txn.created_at) >= startOfWeek)
+    .reduce((sum, txn) => sum + txn.points_awarded, 0);
+
+  const pointsThisMonth = allTransactions
+    .filter(txn => new Date(txn.created_at) >= startOfMonth)
+    .reduce((sum, txn) => sum + txn.points_awarded, 0);
+
+  const pointsAllTime = allTransactions.reduce((sum, txn) => sum + txn.points_awarded, 0);
 
   if (loading) {
     return (
@@ -111,8 +152,8 @@ const Transactions = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="px-6 py-4 bg-gradient-to-br from-green-500/20 to-green-600/10 border border-green-500/30 rounded-xl backdrop-blur-sm">
-                    <p className="text-xs text-green-300/80 uppercase tracking-wider font-semibold mb-1">Page Points</p>
-                    <p className="text-3xl font-bold text-green-400">+{totalPoints}</p>
+                    <p className="text-xs text-green-300/80 uppercase tracking-wider font-semibold mb-1">All Time</p>
+                    <p className="text-3xl font-bold text-green-400">+{pointsAllTime}</p>
                   </div>
                 </div>
               </div>
@@ -122,45 +163,44 @@ const Transactions = () => {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
-          {/* Total Transactions */}
+          {/* This Week */}
           <SpotlightCard className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 backdrop-blur-xl border border-blue-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 group">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-blue-500/20 rounded-lg group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+              {/* <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div> */}
             </div>
-            <p className="text-sm text-white/50 mb-1 font-medium">This Page</p>
-            <p className="text-3xl font-bold text-white">{transactions.length}</p>
+            <p className="text-sm text-white/50 mb-1 font-medium">This Week</p>
+            <p className="text-3xl font-bold text-white">+{pointsThisWeek}</p>
           </SpotlightCard>
 
-          {/* Points Earned */}
+          {/* This Month */}
           <SpotlightCard className="bg-gradient-to-br from-green-500/10 to-green-600/5 backdrop-blur-xl border border-green-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-green-500/10 transition-all duration-300 group">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-green-500/20 rounded-lg group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <span className="text-xs font-semibold text-green-400 bg-green-500/20 px-3 py-1 rounded-full">Points</span>
             </div>
-            <p className="text-sm text-white/50 mb-1 font-medium">Points Earned</p>
-            <p className="text-3xl font-bold text-white">+{totalPoints}</p>
+            <p className="text-sm text-white/50 mb-1 font-medium">This Month</p>
+            <p className="text-3xl font-bold text-white">+{pointsThisMonth}</p>
           </SpotlightCard>
 
-          {/* Current Page */}
+          {/* All Time */}
           <SpotlightCard className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 backdrop-blur-xl border border-purple-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 group">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-purple-500/20 rounded-lg group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
             </div>
-            <p className="text-sm text-white/50 mb-1 font-medium">Current Page</p>
-            <p className="text-3xl font-bold text-white">{page}</p>
+            <p className="text-sm text-white/50 mb-1 font-medium">All Time</p>
+            <p className="text-3xl font-bold text-white">+{pointsAllTime}</p>
           </SpotlightCard>
         </div>
 
