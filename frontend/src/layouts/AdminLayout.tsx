@@ -18,9 +18,9 @@ const AdminLayout = () => {
             {/* Grainient Background */}
             <div className="fixed inset-0 w-full h-full -z-10">
                 <Grainient
-                    color1="#555555"
-                    color2="#24641b"
-                    color3="#142d91"
+                    color1="#1A1919"
+                    color2="#0d7000"
+                    color3="#00556e"
                     timeSpeed={0.25}
                     colorBalance={0}
                     warpStrength={1}
