@@ -3,6 +3,7 @@ import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/useAuth";
 import RoleRedirect from "../../app/RoleRedirect";
+import logo from "../../../src/login-logo.png"
 
 const Login = () => {
   const { login, loginWithGoogle } = useAuth();
@@ -71,14 +72,15 @@ const Login = () => {
       <div className="w-full max-w-md relative">
         {/* Logo/Brand */}
         <div className="text-center mb-8 animate-fade-in">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl mb-4 shadow-lg shadow-emerald-500/30 dark:shadow-emerald-500/20">
+          <img src={logo} alt="logo" className="w-30 flex justify-center items-center text-center mx-auto"  />
+          {/* <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl mb-4 shadow-lg shadow-emerald-500/30 dark:shadow-emerald-500/20">
             <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
-          </div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
+          </div> */}
+          {/* <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
             REMAT
-          </h1>
+          </h1> */}
           <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
             Recycle Smarter, Live Greener
           </p>
@@ -86,10 +88,10 @@ const Login = () => {
 
         {/* Login Card */}
         <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl rounded-3xl shadow-2xl shadow-gray-200/50 dark:shadow-black/50 p-8 border border-gray-200/50 dark:border-zinc-800/50">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
             Welcome Back
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-8">
+          <p className="text-gray-600 dark:text-gray-400 mb-8 text-center">
             Sign in to continue your eco-journey
           </p>
 

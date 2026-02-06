@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Grainient from "../pages/components/Granient";
 import Footer from "../pages/components/Footer";
 import PillNav from "../pages/components/PillNav";
-import logo from "../../public/tab-logo.png"
+import logo from "../../src/tab-logo.png"
 
 const AdminLayout = () => {
     const items = [
