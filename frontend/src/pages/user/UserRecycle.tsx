@@ -245,7 +245,7 @@ const UserRecycle = () => {
         {/* Action Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {/* Camera Scan Card */}
-          <SpotlightCard className="bg-linear-to-br from-blue-500/10 to-blue-600/5 backdrop-blur-xl border border-blue-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 h-full">
+          <SpotlightCard className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 backdrop-blur-xl border border-blue-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 h-full">
             <div className="flex flex-col items-center justify-center text-center h-full">
               <div className="p-4 bg-blue-500/20 rounded-xl mb-4">
                 <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -265,7 +265,7 @@ const UserRecycle = () => {
           </SpotlightCard>
 
           {/* Upload Photo Card */}
-            <SpotlightCard className="bg-linear-to-br from-purple-500/10 to-purple-600/5 backdrop-blur-xl border border-purple-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 h-full">
+            <SpotlightCard className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 backdrop-blur-xl border border-purple-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 h-full">
               <div className="flex flex-col items-center justify-center text-center h-full">
               <div className="p-4 bg-purple-500/20 rounded-xl mb-4">
                 <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -293,7 +293,7 @@ const UserRecycle = () => {
           </SpotlightCard>
 
           {/* Manual Selection Card */}
-            <SpotlightCard className="bg-linear-to-br from-green-500/10 to-green-600/5 backdrop-blur-xl border border-green-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-green-500/10 transition-all duration-300 h-full">
+            <SpotlightCard className="bg-gradient-to-br from-green-500/10 to-green-600/5 backdrop-blur-xl border border-green-500/20 rounded-xl p-6 hover:shadow-xl hover:shadow-green-500/10 transition-all duration-300 h-full">
               <div className="flex flex-col items-center justify-center text-center h-full">
               <div className="p-4 bg-green-500/20 rounded-xl mb-4">
                 <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -469,7 +469,7 @@ const UserRecycle = () => {
 
             {/* Confirmation */}
             {scannedBinId && (
-              <SpotlightCard className="bg-linear-to-br from-green-500/10 to-green-600/5 backdrop-blur-xl border border-green-500/20 rounded-xl p-8">
+              <SpotlightCard className="bg-gradient-to-br from-green-500/10 to-green-600/5 backdrop-blur-xl border border-green-500/20 rounded-xl p-8">
                 <Confirmation
                   result={result}
                   binId={scannedBinId}
