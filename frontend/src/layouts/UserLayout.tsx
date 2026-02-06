@@ -4,7 +4,7 @@ import NavBar from "../pages/components/NavBar";
 
 const UserLayout = () => {
     return (
-        <>
+        <div className="min-h-screen bg-gray-50 dark:bg-black transition-colors duration-300">
             <NavBar
                 items={[
                     { title: 'Dashboard', link: '/user/dashboard' },
@@ -15,8 +15,11 @@ const UserLayout = () => {
                     { title: 'Leaderboard', link: '/user/leaderboard' },
                 ]}
             />
-            <Outlet />
-        </>
+            {/* Add padding-top to account for fixed navbar */}
+            <div className="pt-16">
+                <Outlet />
+            </div>
+        </div>
     )
 }
 
