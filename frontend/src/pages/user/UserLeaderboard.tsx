@@ -59,12 +59,12 @@ const UserLeaderboard = () => {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-xl flex items-center justify-center shadow-lg shadow-yellow-500/30">
+            <div className="w-12 h-12 bg-linear-to-br from-yellow-400 to-amber-500 rounded-xl flex items-center justify-center shadow-lg shadow-yellow-500/30">
               <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
               </svg>
             </div>
-            <h1 className="text-4xl font-bold text-white bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold text-white bg-linear-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">
               Leaderboard
             </h1>
           </div>
@@ -85,7 +85,7 @@ const UserLeaderboard = () => {
               <div className="grid grid-cols-3 gap-4 md:gap-6">
                 {/* 2nd Place */}
                 <div className="order-1 md:order-1">
-                  <div className="bg-gradient-to-br from-gray-400 to-gray-500 rounded-xl p-6 text-center shadow-xl transform hover:scale-105 transition-all duration-300 border border-gray-300/30">
+                  <div className="bg-linear-to-br from-gray-400 to-gray-500 rounded-xl p-6 text-center shadow-xl transform hover:scale-105 transition-all duration-300 border border-gray-300/30">
                     <div className="text-5xl mb-3">🥈</div>
                     <div className="w-16 h-16 mx-auto mb-3 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/40">
                       <span className="text-2xl font-bold text-white">2</span>
@@ -103,7 +103,7 @@ const UserLeaderboard = () => {
 
                 {/* 1st Place */}
                 <div className="order-2 md:order-2 col-span-3 md:col-span-1">
-                  <div className="bg-gradient-to-br from-yellow-400 via-yellow-500 to-amber-600 rounded-xl p-8 text-center shadow-2xl transform md:-translate-y-4 hover:scale-105 transition-all duration-300 border-2 border-yellow-300/50">
+                  <div className="bg-linear-to-br from-yellow-400 via-yellow-500 to-amber-600 rounded-xl p-8 text-center shadow-2xl transform md:-translate-y-4 hover:scale-105 transition-all duration-300 border-2 border-yellow-300/50">
                     <div className="text-6xl mb-3 animate-bounce">🥇</div>
                     <div className="w-20 h-20 mx-auto mb-4 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center border-4 border-white/60 shadow-lg">
                       <span className="text-3xl font-bold text-white">1</span>
@@ -124,7 +124,7 @@ const UserLeaderboard = () => {
 
                 {/* 3rd Place */}
                 <div className="order-3 md:order-3">
-                  <div className="bg-gradient-to-br from-amber-600 to-amber-700 rounded-xl p-6 text-center shadow-xl transform hover:scale-105 transition-all duration-300 border border-amber-500/30">
+                  <div className="bg-linear-to-br from-amber-600 to-amber-700 rounded-xl p-6 text-center shadow-xl transform hover:scale-105 transition-all duration-300 border border-amber-500/30">
                     <div className="text-5xl mb-3">🥉</div>
                     <div className="w-16 h-16 mx-auto mb-3 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/40">
                       <span className="text-2xl font-bold text-white">3</span>
@@ -146,7 +146,7 @@ const UserLeaderboard = () => {
 
         {/* Full Leaderboard Table */}
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl">
-          <div className="p-6 border-b border-white/10 bg-gradient-to-r from-white/5 to-white/0">
+          <div className="p-6 border-b border-white/10 bg-linear-to-r from-white/5 to-white/0">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
               <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
@@ -176,14 +176,14 @@ const UserLeaderboard = () => {
                       key={user.id}
                       className={`transition-all duration-200 ${
                         isCurrentUser
-                          ? "bg-gradient-to-r from-green-500/20 to-emerald-500/10 border-l-4 border-green-500"
+                          ? "bg-linear-to-r from-green-500/20 to-emerald-500/10 border-l-4 border-green-500"
                           : "hover:bg-white/5"
                       }`}
                     >
                       <td className="p-4">
                         <div className="flex items-center gap-2">
                           {isTopThree ? (
-                            <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-lg flex items-center justify-center shadow-md">
+                            <div className="w-8 h-8 bg-linear-to-br from-yellow-400 to-amber-500 rounded-lg flex items-center justify-center shadow-md">
                               <span className="text-white font-bold text-sm">{rank}</span>
                             </div>
                           ) : (
@@ -198,8 +198,8 @@ const UserLeaderboard = () => {
                         <div className="flex items-center gap-3">
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${
                             isCurrentUser
-                              ? "bg-gradient-to-br from-green-400 to-emerald-500"
-                              : "bg-gradient-to-br from-blue-500 to-purple-600"
+                              ? "bg-linear-to-br from-green-400 to-emerald-500"
+                              : "bg-linear-to-br from-blue-500 to-purple-600"
                           }`}>
                             {user.name.charAt(0).toUpperCase()}
                           </div>
@@ -235,7 +235,7 @@ const UserLeaderboard = () => {
           </div>
 
           {/* Pagination */}
-          <div className="p-6 border-t border-white/10 bg-gradient-to-r from-white/5 to-white/0">
+          <div className="p-6 border-t border-white/10 bg-linear-to-r from-white/5 to-white/0">
             <div className="flex justify-between items-center">
               <button
                 onClick={() => setPage((p) => Math.max(p - 1, 1))}

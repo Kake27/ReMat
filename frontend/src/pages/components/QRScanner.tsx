@@ -14,7 +14,7 @@ export default function QRScanner({ onScanSuccess }: Props) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [scanned, setScanned] = useState(false);
 
-  // --- START CAMERA SCAN (user controlled) ---
+
   const startScan = async () => {
     if (!videoRef.current || isScanning) return;
 
@@ -22,10 +22,13 @@ export default function QRScanner({ onScanSuccess }: Props) {
     const scanner = new QrScanner(
       videoRef.current,
       (result) => {
-        // stop scanner and mark scanned before notifying parent so UI hides quickly
+
         try {
           stopScan();
-        } catch (e) {}
+        } 
+        catch (e) {
+          console.log("An error occurred: ", e);
+        }
         setScanned(true);
         onScanSuccess(result.data);
       },
@@ -41,14 +44,15 @@ export default function QRScanner({ onScanSuccess }: Props) {
 
     try {
       await scanner.start();
-    } catch (err) {
+    } 
+    catch (err) {
       console.error("Camera start failed", err);
       setError("Camera access denied");
       setIsScanning(false);
     }
   };
 
-  // --- STOP CAMERA SCAN ---
+
   const stopScan = () => {
     if (scannerRef.current) {
       scannerRef.current.stop();
@@ -58,7 +62,7 @@ export default function QRScanner({ onScanSuccess }: Props) {
     setIsScanning(false);
   };
 
-  // --- FILE UPLOAD SCAN ---
+
   const scanFromFile = async (file: File) => {
     try {
       setError(null);
@@ -75,13 +79,13 @@ export default function QRScanner({ onScanSuccess }: Props) {
     }
   };
 
-  // --- CLEANUP ON UNMOUNT ---
+
   useEffect(() => {
     return () => stopScan();
   }, []);
 
   return (
-    // hide scanner UI after a successful scan
+
     scanned ? null : (
     <div className="w-full max-w-2xl mx-auto">
       <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl shadow-black/20">
@@ -137,7 +141,7 @@ export default function QRScanner({ onScanSuccess }: Props) {
               <div className="space-y-3">
                 <button
                   onClick={startScan}
-                  className="w-full py-3 px-4 bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-purple-500/20 hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
+                  className="w-full py-3 px-4 bg-linear-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-purple-500/20 hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
