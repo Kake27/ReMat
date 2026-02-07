@@ -62,6 +62,7 @@ def get_pickup_request(requestId: UUID, db:Session=Depends(get_db)):
 @router.post("", response_model=PickupRequestOut)
 def create_pickup_request(
     user_id: str = Form(...),
+    e_waste_type: str = Form(...),
     latitude: float = Form(...),
     longitude: float = Form(...),
     preferred_datetime: str = Form(...),
@@ -84,6 +85,7 @@ def create_pickup_request(
 
     pickup = PickupRequest(
         user_id=user_id,
+        e_waste_type=e_waste_type,
         image_url=image_url,
         location=make_geography_point(latitude, longitude),
         preferred_datetime=preferred_datetime,

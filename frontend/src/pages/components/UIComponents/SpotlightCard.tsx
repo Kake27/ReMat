@@ -9,12 +9,14 @@ import './SpotlightCard.css';
 interface SpotlightCardProps extends React.PropsWithChildren {
   className?: string;
   spotlightColor?: `rgba(${number}, ${number}, ${number}, ${number})`;
+  onClick?: () => void;
 }
 
 const SpotlightCard: React.FC<SpotlightCardProps> = ({
   children,
   className = '',
-  spotlightColor = 'rgba(255, 255, 255, 0.25)'
+  spotlightColor = 'rgba(255, 255, 255, 0.25)',
+  onClick
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +33,15 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
   };
 
   return (
-    <div ref={divRef} onMouseMove={handleMouseMove} className={`card-spotlight ${className}`}>
+    <div
+      ref={divRef}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onMouseMove={handleMouseMove}
+      onClick={onClick}
+      onKeyDown={onClick ? (e) => { if (e.key === "Enter" || e.key === " ") e.currentTarget.click(); } : undefined}
+      className={`card-spotlight ${className}`}
+    >
       {children}
     </div>
   );

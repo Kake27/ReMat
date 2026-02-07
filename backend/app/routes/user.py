@@ -68,6 +68,9 @@ async def detect_waste(image: UploadFile = File(...)):
         
         # Predict using the model
         prediction_result = predict_waste(filepath)
+
+        if filepath and os.path.exists(filepath):
+            os.remove(filepath)
         
         return {
             "waste_type": prediction_result["waste_type"],

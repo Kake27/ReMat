@@ -30,7 +30,8 @@ const Signup = () => {
     try {
       setLoading(true);
       await signup(name, email, password);
-      navigate("/", {replace: true});
+      toast.success("Signed up successfully! Please login.")
+      navigate("/auth/login", {replace: true});
     } 
     catch (err: unknown) {
       const error = err as {code?: string, message?: string};
@@ -50,8 +51,8 @@ const Signup = () => {
     try {
       setLoading(true);
       await signupWithGoogle();
-      toast.success("Signed up successfully!")
-      navigate("/", {replace: true});
+      toast.success("Signed up successfully! Please login.")
+      navigate("/auth/login", {replace: true});
     } 
     catch (err: unknown) {
       const error = err as {code?: string, message?: string};
