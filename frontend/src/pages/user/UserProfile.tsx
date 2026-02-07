@@ -165,6 +165,7 @@ const UserProfile = () => {
 
 
   const handleLogout = () => {
+    toast.success("Logged out successfully!")
     logout();
   };
 
