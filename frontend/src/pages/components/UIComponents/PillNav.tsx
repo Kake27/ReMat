@@ -141,6 +141,32 @@ const PillNav: React.FC<PillNavProps> = ({
     return () => window.removeEventListener('resize', onResize);
   }, [items, ease, initialLoadAnimation]);
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!isMobileMenuOpen) return;
+
+      const target = event.target as Node;
+      const container = navContainerRef.current;
+      
+      // Close menu if click is outside the nav container
+      if (container && !container.contains(target)) {
+        closeMobileMenu();
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      // Small delay to prevent immediate closure when opening
+      setTimeout(() => {
+        document.addEventListener('click', handleClickOutside);
+      }, 100);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isMobileMenuOpen]);
+
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
 
@@ -168,34 +194,6 @@ const PillNav: React.FC<PillNavProps> = ({
     }
   };
 
-
-  // Close mobile menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (!isMobileMenuOpen) return;
-
-      const target = event.target as Node;
-      const container = navContainerRef.current;
-      
-      // Close menu if click is outside the nav container
-      if (container && !container.contains(target)) {
-        closeMobileMenu();
-      }
-    };
-
-    if (isMobileMenuOpen) {
-      // Small delay to prevent immediate closure when opening
-      setTimeout(() => {
-        document.addEventListener('click', handleClickOutside);
-      }, 100);
-    }
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [isMobileMenuOpen]);
-
-  
   const handleEnter = (i: number) => {
     const tl = tlRefs.current[i];
     if (!tl) return;
@@ -409,7 +407,7 @@ const PillNav: React.FC<PillNavProps> = ({
                 <Link
                   to={item.href}
                   className={`mobile-menu-link${activeHref === item.href ? ' is-active' : ''}`}
-                  onClick={handleMobileMenuLinkClick}
+                  onClick={closeMobileMenu}
                 >
                   {item.label}
                 </Link>
@@ -417,6 +415,7 @@ const PillNav: React.FC<PillNavProps> = ({
                 <a
                   href={item.href}
                   className={`mobile-menu-link${activeHref === item.href ? ' is-active' : ''}`}
+                  onClick={closeMobileMenu}
                   onClick={handleMobileMenuLinkClick}
                 >
                   {item.label}
