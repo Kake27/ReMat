@@ -49,6 +49,7 @@ const PillNav: React.FC<PillNavProps> = ({
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const navItemsRef = useRef<HTMLDivElement | null>(null);
   const logoRef = useRef<HTMLAnchorElement | HTMLElement | null>(null);
+  const navContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const layout = () => {
@@ -140,6 +141,61 @@ const PillNav: React.FC<PillNavProps> = ({
     return () => window.removeEventListener('resize', onResize);
   }, [items, ease, initialLoadAnimation]);
 
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+
+    const hamburger = hamburgerRef.current;
+    const menu = mobileMenuRef.current;
+
+    if (hamburger) {
+      const lines = hamburger.querySelectorAll('.hamburger-line');
+      gsap.to(lines[0], { rotation: 0, y: 0, duration: 0.3, ease });
+      gsap.to(lines[1], { rotation: 0, y: 0, duration: 0.3, ease });
+    }
+
+    if (menu) {
+      gsap.to(menu, {
+        opacity: 0,
+        y: 10,
+        scaleY: 1,
+        duration: 0.2,
+        ease,
+        transformOrigin: 'top center',
+        onComplete: () => {
+          gsap.set(menu, { visibility: 'hidden' });
+        }
+      });
+    }
+  };
+
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!isMobileMenuOpen) return;
+
+      const target = event.target as Node;
+      const container = navContainerRef.current;
+      
+      // Close menu if click is outside the nav container
+      if (container && !container.contains(target)) {
+        closeMobileMenu();
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      // Small delay to prevent immediate closure when opening
+      setTimeout(() => {
+        document.addEventListener('click', handleClickOutside);
+      }, 100);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isMobileMenuOpen]);
+
+  
   const handleEnter = (i: number) => {
     const tl = tlRefs.current[i];
     if (!tl) return;
@@ -226,6 +282,11 @@ const PillNav: React.FC<PillNavProps> = ({
     onMobileMenuClick?.();
   };
 
+  // Handler for when a mobile menu link is clicked
+  const handleMobileMenuLinkClick = () => {
+    closeMobileMenu();
+  };
+
   const isExternalLink = (href: string) =>
     href.startsWith('http://') ||
     href.startsWith('https://') ||
@@ -244,7 +305,7 @@ const PillNav: React.FC<PillNavProps> = ({
   } as React.CSSProperties;
 
   return (
-    <div className="pill-nav-container">
+    <div className="pill-nav-container" ref={navContainerRef}>
       <nav className={`pill-nav ${className}`} aria-label="Primary" style={cssVars}>
         {isRouterLink(items?.[0]?.href) ? (
           <Link
@@ -348,7 +409,7 @@ const PillNav: React.FC<PillNavProps> = ({
                 <Link
                   to={item.href}
                   className={`mobile-menu-link${activeHref === item.href ? ' is-active' : ''}`}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={handleMobileMenuLinkClick}
                 >
                   {item.label}
                 </Link>
@@ -356,7 +417,7 @@ const PillNav: React.FC<PillNavProps> = ({
                 <a
                   href={item.href}
                   className={`mobile-menu-link${activeHref === item.href ? ' is-active' : ''}`}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={handleMobileMenuLinkClick}
                 >
                   {item.label}
                 </a>
