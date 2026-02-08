@@ -1,8 +1,8 @@
-# ReMat ♻️
+# ReMat - One Stop E-Waste Management Solution ♻️
 
 <div align="center">
 
-![ReMat Logo](frontend/src/login-logo.png)
+<img src="frontend/src/login-logo.png" alt="ReMat Logo" width="50%" />
 
 **Turning E-Waste into Environmental Impact - Powered by AI**
 
@@ -520,14 +520,7 @@ We welcome contributions!
 
 ## 📞 Contact
 
-- **Email**: remat@example.com
-- **Issues**: [GitHub Issues](https://github.com/yourusername/remat/issues)
-
----
-
-## 📄 License
-
-See repository license file (if any). ReMat is an e-waste recycling project for educational and environmental purposes.
+- **Email**: remat.project123@gmail.com
 
 ---
 
@@ -539,4 +532,7 @@ Every device recycled counts. Every action matters. Together, we can tackle e-wa
 
 ⭐ **Star us on GitHub** if you believe in our mission!
 
+</div>
+<div align="center">
+  This project was made for Haxplore, Codefest '26.
 </div>
