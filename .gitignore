@@ -3,7 +3,8 @@
 __pycache__/
 .env
 serviceAccountKey.json
-*.jpg
+uploads/
+ewaste_final.keras
 
 # Logs
 logs
