@@ -311,19 +311,11 @@ cd backend
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-pip install -r ../requirements.txt
-
-# Create uploads directory
 mkdir -p uploads/waste_images
 
-# Download Firebase Admin SDK key
-# Save to backend/serviceAccountKey.json
-
-# Create .env
-echo "DATABASE_URL=postgresql://user:pass@localhost:5432/remat
-ADMIN_EMAILS=admin@example.com
-SUPABASE_URL=your_supabase_url
-SUPABASE_SERVICE_ROLE_KEY=your_key" > .env
+# Configure environment
+# 1. Add Firebase Admin SDK key to backend/serviceAccountKey.json
+# 2. Create backend/.env with database and API credentials
 
 # Start backend
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
@@ -332,41 +324,21 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 cd frontend
 npm install
 
-# Create .env with Firebase config
-echo "VITE_FIREBASE_API_KEY=your_key
-VITE_FIREBASE_AUTH_DOMAIN=your_domain
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_id
-VITE_FIREBASE_APP_ID=your_app_id
-VITE_API_BASE_URL=http://127.0.0.1:8000" > .env
-
+# Configure frontend/.env with Firebase config
 npm run dev
 ```
 
 ### Database Setup
 
 ```sql
--- PostgreSQL setup
 CREATE DATABASE remat;
 \c remat
 CREATE EXTENSION postgis;
-
--- Tables are created automatically by SQLAlchemy
--- Verify PostGIS
-SELECT PostGIS_version();
 ```
 
-### ML Model Setup
+### ML Model
 
-```bash
-# Download trained model from Kaggle
-# https://www.kaggle.com/code/saiswaroop8656/remat
-
-# Place at backend/Models/ewaste_final.keras
-mkdir -p backend/Models
-# Copy your trained model here
-```
+Download the trained model from [Kaggle](https://www.kaggle.com/code/saiswaroop8656/remat) and place at `backend/Models/ewaste_final.keras`
 
 ---
 
