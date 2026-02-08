@@ -19,6 +19,7 @@ export default function CameraCapture({
 }: CameraCaptureProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isCapturing, setIsCapturing] = useState(false);
@@ -30,6 +31,7 @@ export default function CameraCapture({
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode }
       });
+      streamRef.current = mediaStream;
       setStream(mediaStream);
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream;
@@ -42,14 +44,24 @@ export default function CameraCapture({
   };
 
   const stopCamera = () => {
-    stream?.getTracks().forEach(track => track.stop());
+    const currentStream = streamRef.current;
+    if (currentStream) {
+      currentStream.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
     setStream(null);
     if (videoRef.current) videoRef.current.srcObject = null;
   };
 
-  // Do not auto-start camera. Camera will start when user requests it.
+  // Ensure camera is stopped on unmount (cleanup uses ref so we always have latest stream)
   useEffect(() => {
-    return () => stopCamera();
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current = null;
+      }
+      if (videoRef.current) videoRef.current.srcObject = null;
+    };
   }, []);
 
   // If parent requests auto open (used for modal), start camera on mount
