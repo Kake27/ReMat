@@ -20,30 +20,22 @@ const CONFETTI_COLORS = [
 ];
 
 
-const ThankYouPage = () => {
-  const navigate = useNavigate();
-  const [showConfetti, setShowConfetti] = useState(true);
-  const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
-
-  useEffect(() => {
-  const pieces: ConfettiPiece[] = Array.from({ length: 30 }).map(() => ({
+function createConfettiPieces(): ConfettiPiece[] {
+  return Array.from({ length: 30 }).map(() => ({
     left: `${Math.random() * 100}%`,
     top: `-${Math.random() * 20}%`,
     color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
     delay: `${Math.random() * 2}s`,
     duration: `${2 + Math.random() * 2}s`,
   }));
+}
 
-  setConfetti(pieces);
-
-  const timer = setTimeout(() => setShowConfetti(false), 3000);
-  return () => clearTimeout(timer);
-}, []);
-
-  
+const ThankYouPage = () => {
+  const navigate = useNavigate();
+  const [showConfetti, setShowConfetti] = useState(true);
+  const [confetti] = useState<ConfettiPiece[]>(createConfettiPieces);
 
   useEffect(() => {
-    // Hide confetti after animation
     const timer = setTimeout(() => setShowConfetti(false), 3000);
     return () => clearTimeout(timer);
   }, []);

@@ -23,11 +23,13 @@ export default function QRScanner({ onScanSuccess, onClose }: Props) {
     try {
       await scanner.stop();
     } catch (_) {
-      // "Cannot stop, scanner is not running" etc. - ignore
+        console.log(_)
     }
     try {
       scanner.clear();
-    } catch (_) {}
+    } catch (_) {
+      console.log(_)
+    }
   }, []);
 
   const startScan = useCallback(async () => {
@@ -107,7 +109,9 @@ export default function QRScanner({ onScanSuccess, onClose }: Props) {
         scanner.stop().catch(() => {}).finally(() => {
           try {
             scanner.clear();
-          } catch (_) {}
+          } catch (_) {
+            console.log(_)
+          }
         });
       }
     };

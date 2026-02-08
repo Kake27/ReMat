@@ -21,7 +21,8 @@ const UserPickups = () => {
   useEffect(() => {
     if (!userId) return;
 
-    setLoading(true);
+    // Defer setState so it's not synchronous in the effect body (avoids cascading-render warning)
+    queueMicrotask(() => setLoading(true));
     fetch(`${BACKEND_URL}/user/pickup-requests?user_id=${userId}`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch pickup requests");

@@ -28,12 +28,12 @@ type Transaction = {
   user_id: string;
 };
 
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  points: number;
-};
+// type User = {
+//   id: string;
+//   name: string;
+//   email: string;
+//   points: number;
+// };
 
 type TimeFilter = "day" | "week" | "month" | "year" | "all";
 
@@ -41,11 +41,11 @@ const Analytics = () => {
   const [loading, setLoading] = useState(true);
   const [timeFilter, setTimeFilter] = useState<TimeFilter>("week");
   const [allTransactions, setAllTransactions] = useState<Transaction[]>([]);
-  const [users, setUsers] = useState<User[]>([]);
+  // const [users, setUsers] = useState<User[]>([]);
   const [wasteDistribution, setWasteDistribution] = useState<WasteDistribution[]>([]);
   const [timelineData, setTimelineData] = useState<TimelineData[]>([]);
 
-  // Fetch all users and their transactions
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -58,7 +58,7 @@ const Analytics = () => {
         }
 
         const usersData = await usersRes.json();
-        setUsers(usersData);
+        // setUsers(usersData);
 
         // Fetch transactions for all users
         const allTxns: Transaction[] = [];
@@ -83,7 +83,7 @@ const Analytics = () => {
         console.error("Error fetching analytics data:", err);
         toast.error("Error fetching analytics data.")
         setAllTransactions([]);
-        setUsers([]);
+        // setUsers([]);
       } finally {
         setLoading(false);
       }
