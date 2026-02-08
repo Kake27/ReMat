@@ -1,4 +1,4 @@
-# ReMat - One Stop E-Waste Management Solution ♻️
+# ReMat - An One Stop E-Waste Management Solution ♻️
 
 <div align="center">
 
@@ -50,9 +50,10 @@ Electronic waste is one of the fastest-growing waste streams globally. India alo
 - Confidence-based point allocation rewards quality submissions
 - Real-time detection via `/user/detect-waste` endpoint
 - Manual override option when AI misclassifies
+- **Note**: In the deployment version, the `.tflite` format of the model has been used for inference, as the `.keras` format is too heavy for the free tier on `render.com`. If running locally, it is recommended to use the `.keras` format which can be downloaded from the Kaggle page under [ML Model](#ml-model). The model is to be placed under `backend/Models` and the code in `waste_temp.py` used for running it.
 
 ```python
-# Real production inference - TensorFlow Keras model
+# Real production inference - TensorFlow Keras / TfLite model
 img = image.load_img(image_path, target_size=(224, 224))
 img_array = image.img_to_array(img)
 img_array = preprocess_input(np.expand_dims(img_array, axis=0))
